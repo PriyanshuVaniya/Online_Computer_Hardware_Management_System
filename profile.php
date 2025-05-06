@@ -1,41 +1,17 @@
 <?php
 session_start();
 include('connection.php');
-if (!isset($_SESSION['id'])) {
-	header("location:login.php");
-	}
-
-if($_POST)
-{
-	$opass = $_POST['opass'];
-	$npass = $_POST['npass'];
-	$cpass = $_POST['cpass'];
-	$id = $_SESSION['id'];
-    $opq = mysqli_query($connection,"select * from tbl_user where user_id = '{$id}'");
-$opdata = mysqli_fetch_array($opq);
-//Check Old Password
-if ($opass == $opdata['password']) {
-//Compare New and Confirm
-if ($npass == $cpass){
-//Update Password
-$uq = mysqli_query($connection, "update tbl_user set password='{$npass}' where user_id='{$id}' ");
-if ($uq) {
-echo "<script>alert('Password Changed'); </script>";
-header('location:index.php');
-}
-} else {
-echo "<script>alert('New and Confirm Password Not Match'); </script>";
-}
-} else {
-echo "<script>alert('Old Password Not Match'); </script>";
-}
-}
+$q = mysqli_query($connection,"SELECT * FROM tbl_user where user_id ='".$_SESSION['id']."' ");
+$row=mysqli_fetch_array($q);
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
+
+<!-- Mirrored from p.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/contact.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 12 Jan 2024 07:37:43 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
-	<title>Computer hub</title>
-	<!-- Required meta tags -->
+<title>Computer hub</title>	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -237,17 +213,22 @@ RIGHT SIDEBAR TOGGLE SECTION
   }
 }
 </style>
-
-
     <!-- top-header -->
-    <?php
-		include('./thempart/header.php');
-	?>
+	<?php
+			include('./thempart/header.php');
+		?>
     <!-- //top-header -->
 	<!-- banner-2 -->
 	<div class="page-head_agile_info_w3l inner-contact-page">
 		<div class="container py-5">
-			<h3 class="title-style text-white pt-5"><span>Change Password</span></h3>
+			<h3 class="title-style text-white pt-5"><span>My Profile</span></h3>
+			<ul class="w3_short pt-3 pb-5">
+				<li>
+					<a href="index.php" class="text-white">Home</a>
+					<i class="fa fa-angle-right mx-2 text-white" aria-hidden="true"></i>
+				</li>
+				<li class="text-light">My Profile</li>
+			</ul>
 		</div>
 	</div>
 	<!-- //banner-2 -->
@@ -269,22 +250,31 @@ RIGHT SIDEBAR TOGGLE SECTION
 		<div class="container py-md-5 py-4">
 			<div class="mx-auto pt-lg-4 pt-md-5 pt-4" style="max-width:1000px">
 				<div class="row contact-block">
-                <div class="col-md-5 contact-left"> 
-                <form action="#" method="post" id="myform">
-					<div class="form-group">
-							<input type="password" class="form-control" placeholder="Old Password" name="opass" required="">
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="New Password" name="npass" required="">
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="Confirm Password" name="cpass" required="">
-						</div>
-						<div class="right-w3l">
-							<input type="submit"  class="form-control" value="Change ">
-						</div>
-                    </div>
-				</form>
+					<div class="col-md-5 contact-left">
+						<h3 class="title-style font-weight-bold mb-4">Profile</h3>
+						
+                        <!--profile picture in circule will be hear-->
+
+					</div>
+					<div class="col-md-7 contact-right mt-md-0 mt-4">
+                       
+						<form action="#" id="myform" method="post" id="myform" class="signin-form">
+							<div class="input-grids">
+								NAME: <input type="text" name="w3lName" value="<?php echo $row["user_name"]; ?>"  class="contact-input" readonly />
+								GENDER: <br>
+                                male:<input type="radio"   name="ugender" <?php echo ($row["gender"]=='M')?'checked':'' ?> value="M" id="gender" readonly >
+                                Female:<input type="radio"  name="ugender"<?php echo ($row["gender"]=='F')?'checked':'' ?> value="F" id="gender" readonly>
+								EMAIL: <input type="text" name="w3lSubect" value="<?php echo $row["email_id"]; ?>" class="contact-input" readonly/>
+								PHONE NO.: <input type="text" name="w3lWebsite" value="<?php echo $row["phone_number"]; ?>" class="contact-input" readonly/>
+								PINCODE: <input type="number" name="w3lWebsite" value="<?php echo $row["pincode"]; ?>" class="contact-input" readonly/>
+                                ADDRESS: <textarea name="w3lMessage" value="" readonly><?php echo $row["address"]; ?></textarea>
+							</div>
+							<div class="form-input">
+                                <a href="edit-profile.php" class="btn btn-style">EDIT PROFILE</a>
+                            
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -300,7 +290,7 @@ RIGHT SIDEBAR TOGGLE SECTION
 		include('./thempart/footer.php')
 	?>
 	<!-- //footer -->
-		<!-- js-files -->
+	<!-- js-files -->
 	<!-- common jquery plugin -->
 	<script data-cfasync="false" src="../../../../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/jquery-3.3.1.min.js"></script>
 	<!-- //common jquery plugin -->
@@ -480,7 +470,6 @@ RIGHT SIDEBAR TOGGLE SECTION
 <script>(function(){var js = "window['__CF$cv$params']={r:'8443ba6cd8aa0336',t:'MTcwNTA0NDk4NC40NzEwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../../../../cdn-cgi/challenge-platform/h/b/scripts/jsd/c8377512/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
 
 
-
 <script src="jquery/jquery-3.7.1.js"></script>
 <script src="jquery/jquery.validate.js"></script>
 <script>
@@ -492,5 +481,4 @@ $("#myform").validate();
 .error{
 color:red;
 }
-</style>
 </html>

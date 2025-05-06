@@ -1,34 +1,23 @@
 <?php
 session_start();
 include('connection.php');
-if (!isset($_SESSION['id'])) {
-	header("location:login.php");
-	}
-
 if($_POST)
 {
-	$opass = $_POST['opass'];
-	$npass = $_POST['npass'];
-	$cpass = $_POST['cpass'];
-	$id = $_SESSION['id'];
-    $opq = mysqli_query($connection,"select * from tbl_user where user_id = '{$id}'");
-$opdata = mysqli_fetch_array($opq);
-//Check Old Password
-if ($opass == $opdata['password']) {
-//Compare New and Confirm
-if ($npass == $cpass){
-//Update Password
-$uq = mysqli_query($connection, "update tbl_user set password='{$npass}' where user_id='{$id}' ");
-if ($uq) {
-echo "<script>alert('Password Changed'); </script>";
-header('location:index.php');
-}
-} else {
-echo "<script>alert('New and Confirm Password Not Match'); </script>";
-}
-} else {
-echo "<script>alert('Old Password Not Match'); </script>";
-}
+    $email = mysqli_real_escape_string($connection,$_POST['email']);
+    $password = mysqli_real_escape_string($connection,$_POST['password']);
+    $query = mysqli_query($connection, "select * from tbl_user where email_id='{$email}' and password='{$password}'");
+    $count=mysqli_num_rows($query);
+    $row=mysqli_fetch_array($query);
+
+    if($count>0)
+    {
+        $_SESSION['id'] = $row['user_id'];
+        $_SESSION['name'] = $row['user_name'];
+        header("location:product.php");
+    }else
+    {
+      echo "<script>alert('Login Failed'); </script>";
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -93,6 +82,19 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 
   gtag('config', 'G-98H8KRKT85');
 </script>
+<script>
+	$(".toggle-password").click(function() {
+
+$(this).toggleClass("fa-eye fa-eye-slash");
+var input = $($(this).attr("toggle"));
+if (input.attr("type") == "password") {
+  input.attr("type", "text");
+} else {
+  input.attr("type", "password");
+}
+});
+
+	</script>
 
 <meta name="robots" content="noindex">
 <body><link rel="stylesheet" href="../../../../../../assests/css/font-awesome.min.css">
@@ -103,6 +105,18 @@ if(typeof _bsa !== 'undefined' && _bsa) {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
 
+.field-icon {
+  float: right;
+  margin-right: 20px;
+  margin-top: -50px;
+  position: relative;
+  z-index: 2;
+}
+
+.container{
+  padding-top:50px;
+  margin: auto;
+}
 
 #w3lDemoBar.w3l-demo-bar {
   top: 0;
@@ -208,6 +222,9 @@ RIGHT SIDEBAR TOGGLE SECTION
 
 
 
+
+
+
 @media (max-width: 992px) {
   #w3lDemoBar.w3l-demo-bar a.desktop-mode{
       display: none;
@@ -237,8 +254,6 @@ RIGHT SIDEBAR TOGGLE SECTION
   }
 }
 </style>
-
-
     <!-- top-header -->
     <?php
 		include('./thempart/header.php');
@@ -247,7 +262,7 @@ RIGHT SIDEBAR TOGGLE SECTION
 	<!-- banner-2 -->
 	<div class="page-head_agile_info_w3l inner-contact-page">
 		<div class="container py-5">
-			<h3 class="title-style text-white pt-5"><span>Change Password</span></h3>
+			<h3 class="title-style text-white pt-5"><span>Login</span></h3>
 		</div>
 	</div>
 	<!-- //banner-2 -->
@@ -269,22 +284,36 @@ RIGHT SIDEBAR TOGGLE SECTION
 		<div class="container py-md-5 py-4">
 			<div class="mx-auto pt-lg-4 pt-md-5 pt-4" style="max-width:1000px">
 				<div class="row contact-block">
-                <div class="col-md-5 contact-left"> 
-                <form action="#" method="post" id="myform">
-					<div class="form-group">
-							<input type="password" class="form-control" placeholder="Old Password" name="opass" required="">
+                <div class="col-md-5 contact-left">
+						
+                    
+                <form method="post" id="myform">
+						<div class="form-group">
+							<input type="email" class="form-control" placeholder="Email" name="email" required="">
 						</div>
 						<div class="form-group">
-							<input type="password" class="form-control" placeholder="New Password" name="npass" required="">
+						<input id="password" type="password" required pattern="(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" class="form-control" placeholder="Password" name="password" required="">
 						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="Confirm Password" name="cpass" required="">
-						</div>
+						
+						<span  class="fa fa-fw fa-eye field-icon toggle-password" onclick="togglePasswordVisibility() "></span>
 						<div class="right-w3l">
-							<input type="submit"  class="form-control" value="Change ">
+							<input type="submit"  class="form-control" name="Log in">
 						</div>
-                    </div>
-				</form>
+						<div class="text-center dont-do mt-3">
+						<a href="forgot-password.php">Forget Password ? </a>
+						</div> <br>
+						<div class="sub-w3l">
+							<div class="custom-control custom-checkbox mr-sm-2">
+								<input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+								<label class="custom-control-label" for="customControlAutosizing">Remember me?</label>
+							</div>
+						</div>
+		
+						<p class="text-center dont-do mt-3">Don't have an account?
+							<a href="register.php" >Register Now</a>
+						</p>
+                        </div>
+				</form>	
 				</div>
 			</div>
 		</div>
@@ -295,12 +324,29 @@ RIGHT SIDEBAR TOGGLE SECTION
 <!---728x90--->
  
 </div>
+<script>
+  function togglePasswordVisibility() {
+    var passwordField = document.getElementById("password");
+    var toggleIcon = document.querySelector(".toggle-password");
+
+    if (passwordField.type === "password") {
+      passwordField.type = "text";
+      toggleIcon.classList.remove("fa-eye-slash");
+      toggleIcon.classList.add("fa-eye");
+    } else {
+      passwordField.type = "password";
+      toggleIcon.classList.remove("fa-eye");
+      toggleIcon.classList.add("fa-eye-slash");
+    }
+  }
+</script>
+
 	<!-- footer -->
 	<?php
 		include('./thempart/footer.php')
 	?>
 	<!-- //footer -->
-		<!-- js-files -->
+	<!-- js-files -->
 	<!-- common jquery plugin -->
 	<script data-cfasync="false" src="../../../../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/jquery-3.3.1.min.js"></script>
 	<!-- //common jquery plugin -->
@@ -478,9 +524,6 @@ RIGHT SIDEBAR TOGGLE SECTION
 	<!-- //Js scripts -->
 
 <script>(function(){var js = "window['__CF$cv$params']={r:'8443ba6cd8aa0336',t:'MTcwNTA0NDk4NC40NzEwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../../../../cdn-cgi/challenge-platform/h/b/scripts/jsd/c8377512/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
-
-
-
 <script src="jquery/jquery-3.7.1.js"></script>
 <script src="jquery/jquery.validate.js"></script>
 <script>
@@ -492,5 +535,4 @@ $("#myform").validate();
 .error{
 color:red;
 }
-</style>
 </html>

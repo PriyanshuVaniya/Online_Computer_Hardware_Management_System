@@ -1,35 +1,27 @@
 <?php
-session_start();
 include('connection.php');
-if (!isset($_SESSION['id'])) {
-	header("location:login.php");
-	}
-
 if($_POST)
 {
-	$opass = $_POST['opass'];
-	$npass = $_POST['npass'];
-	$cpass = $_POST['cpass'];
-	$id = $_SESSION['id'];
-    $opq = mysqli_query($connection,"select * from tbl_user where user_id = '{$id}'");
-$opdata = mysqli_fetch_array($opq);
-//Check Old Password
-if ($opass == $opdata['password']) {
-//Compare New and Confirm
-if ($npass == $cpass){
-//Update Password
-$uq = mysqli_query($connection, "update tbl_user set password='{$npass}' where user_id='{$id}' ");
-if ($uq) {
-echo "<script>alert('Password Changed'); </script>";
-header('location:index.php');
+    $name = mysqli_real_escape_string($connection,$_POST['name']);
+	$gender =  mysqli_real_escape_string($connection,$_POST['ugender']);
+	$email = mysqli_real_escape_string($connection,$_POST['email']);
+    $mobile= mysqli_real_escape_string($connection,$_POST['mobile-no']);
+	$pincode= mysqli_real_escape_string($connection,$_POST['pincode']);
+	$password = mysqli_real_escape_string($connection,$_POST['password']);    
+    $address= mysqli_real_escape_string($connection,$_POST['address']);
+    $query = mysqli_query($connection,"insert into tbl_user(user_type_id,user_name,gender,email_id,phone_number,password,address,pincode) values('1','{$name}','{$gender}','{$email}','{$mobile}','{$password}','{$address}','{$pincode}') ") or die(mysqli_error($connection));
+    if($query)
+{
+    header("location:index.php");;
+	
 }
-} else {
-echo "<script>alert('New and Confirm Password Not Match'); </script>";
+else
+{
+	echo "<script>alert('Registration Unsuccessfull');</script>";
 }
-} else {
-echo "<script>alert('Old Password Not Match'); </script>";
+
 }
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -237,8 +229,6 @@ RIGHT SIDEBAR TOGGLE SECTION
   }
 }
 </style>
-
-
     <!-- top-header -->
     <?php
 		include('./thempart/header.php');
@@ -247,7 +237,7 @@ RIGHT SIDEBAR TOGGLE SECTION
 	<!-- banner-2 -->
 	<div class="page-head_agile_info_w3l inner-contact-page">
 		<div class="container py-5">
-			<h3 class="title-style text-white pt-5"><span>Change Password</span></h3>
+			<h3 class="title-style text-white pt-5"><span>Registration</span></h3>
 		</div>
 	</div>
 	<!-- //banner-2 -->
@@ -269,22 +259,58 @@ RIGHT SIDEBAR TOGGLE SECTION
 		<div class="container py-md-5 py-4">
 			<div class="mx-auto pt-lg-4 pt-md-5 pt-4" style="max-width:1000px">
 				<div class="row contact-block">
-                <div class="col-md-5 contact-left"> 
-                <form action="#" method="post" id="myform">
-					<div class="form-group">
-							<input type="password" class="form-control" placeholder="Old Password" name="opass" required="">
+                <div class="col-md-5 contact-left">
+                <form method="post" id="myform">
+						<div class="form-group">
+							<input type="text" class="form-control" placeholder="Name" name="name" required="">
+						</div>
+
+						 <div class="form-group" >
+							
+                            <div>
+                                male<input type="radio"  required name="ugender" value="M" id="gender">
+                                Female<input type="radio" required name="ugender" value="F" id="gender"> 
+                            </div>
+                        </div>
+                    
+                        <div class="form-group">
+							<input type="email" class="form-control" placeholder="Email" name="email" required="">
 						</div>
 						<div class="form-group">
-							<input type="password" class="form-control" placeholder="New Password" name="npass" required="">
+							<input type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" class="form-control" placeholder="Password" name="password" required="">
+						</div>
+
+                        <div class="form-group">
+							<input type="tel" class="form-control" maxlength="10" placeholder="Mobile No" name="mobile-no" required="">
 						</div>
 						<div class="form-group">
-							<input type="password" class="form-control" placeholder="Confirm Password" name="cpass" required="">
+							<input type="number" class="form-control" maxlength="6" placeholder="Pincode" name="pincode" required="">
 						</div>
+                        <div class="mb-3">
+                       <textarea required type="textarea" class="form-control" placeholder="Address" name="address" required=""></textarea>
+                       </div>
 						<div class="right-w3l">
-							<input type="submit"  class="form-control" value="Change ">
+							<input type="submit"  class="form-control" value="Registration">
 						</div>
-                    </div>
-				</form>
+						<div class="sub-w3l">
+							<div class="custom-control custom-checkbox mr-sm-2">
+								<input type="checkbox" class="custom-control-input"  id="customControlAutosizing2" required>
+								<label class="custom-control-label" for="customControlAutosizing2">I Accept to the Terms
+									& Conditions</label>
+							</div>
+						</div>
+						
+						<p class="text-center dont-do mt-3">Do you have an account?
+							<a href="login.php"  >Login Now</a>
+						</p>
+                        </div>
+					<div class="col-md-5 contact-left">
+						
+					</div>
+					<div class="col-md-7 contact-right mt-md-0 mt-4">
+             
+					</div>
+                </form>
 				</div>
 			</div>
 		</div>
@@ -300,11 +326,10 @@ RIGHT SIDEBAR TOGGLE SECTION
 		include('./thempart/footer.php')
 	?>
 	<!-- //footer -->
-		<!-- js-files -->
+	<!-- js-files -->
 	<!-- common jquery plugin -->
 	<script data-cfasync="false" src="../../../../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/jquery-3.3.1.min.js"></script>
 	<!-- //common jquery plugin -->
-
 	<!-- here stars scrolling icon -->
 	<script type="text/javascript">
 		$(document).ready(function () {
@@ -478,9 +503,6 @@ RIGHT SIDEBAR TOGGLE SECTION
 	<!-- //Js scripts -->
 
 <script>(function(){var js = "window['__CF$cv$params']={r:'8443ba6cd8aa0336',t:'MTcwNTA0NDk4NC40NzEwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../../../../cdn-cgi/challenge-platform/h/b/scripts/jsd/c8377512/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
-
-
-
 <script src="jquery/jquery-3.7.1.js"></script>
 <script src="jquery/jquery.validate.js"></script>
 <script>

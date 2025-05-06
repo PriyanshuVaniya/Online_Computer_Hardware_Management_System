@@ -1,41 +1,107 @@
 <?php
 session_start();
 include('connection.php');
-if (!isset($_SESSION['id'])) {
-	header("location:login.php");
-	}
+if(!isset($_SESSION['id'])){
+	header("location:login.php ");
+}
 
+//using old details
+elseif (isset($_GET["olddetails"])) {
+	$dstatus = "Pending";
+	$ostatus = "Confirm";
+	$pstatus="Pending";
+	$date = date('Y-m-d');
+	$uid=$_SESSION['id'];
+
+	$oiq = mysqli_query($connection,"insert into tbl_order(user_id,order_date,order_status,order_amount) values('{$uid}','{$date}','{$ostatus}','{100000}') ") or die(mysqli_error($connection));
+		//INSERT RECORD ID Order ID
+		$orderid = mysqli_insert_id($connection);		
+	
+	
+	//order_details
+	$ocq = mysqli_query($connection,"select * from tbl_cart where user_id ='{$uid}'" );
+	while($ocd = mysqli_fetch_array($ocq))
+	{
+		//cart data
+		$pid = $ocd['product_id'];
+		$qty = $ocd['product_qty'];
+		//product data
+		$pq = mysqli_query($connection,"select * from tbl_product where product_id ='{$pid}'" );
+		$pdata =  mysqli_fetch_array($pq);
+		$price = $pdata['price'];
+		//order_details add
+		$odq = mysqli_query($connection,"insert into tbl_orderdetail(order_id,product_id,quantity,price) values('{$orderid}','{$pid}','{$qty}','{$price}') ") or die(mysqli_error($connection));
+		//cart delete
+		mysqli_query($connection,"delete from tbl_cart where cart_id ='{$ocd['cart_id']}'"); 
+	}
+	$pmethod="COD";
+	$pp = 200000;
+
+
+	//extracting user Details
+	$ufq = mysqli_query($connection,"select * from tbl_user where user_id ='{$uid}'" );
+	$ud = mysqli_fetch_array($ufq);
+	$name = $ud['user_name'];
+    $mobile = $ud['phone_number'];
+	$address = $ud['address'];
+	$pincode = $ud['pincode'];
+	$dquery = mysqli_query($connection,"insert into tbl_delivery(user_name,order_id,phone_number,delivery_address,delivery_status,pincode) values('{$name}','{$orderid}','{$mobile}','{$address}','{$dstatus}','{$pincode}') ") or die(mysqli_error($connection));
+	$pquery = mysqli_query($connection,"insert into tbl_payment(order_id,payment_date_time,amount,payment_method,payment_status) values('{$orderid}','{$date}','{$pp}','{$pmethod}','{$pstatus}') ") or die(mysqli_error($connection));
+	header("location:payment.php ");
+}
+
+
+
+//using new details
 if($_POST)
 {
-	$opass = $_POST['opass'];
-	$npass = $_POST['npass'];
-	$cpass = $_POST['cpass'];
-	$id = $_SESSION['id'];
-    $opq = mysqli_query($connection,"select * from tbl_user where user_id = '{$id}'");
-$opdata = mysqli_fetch_array($opq);
-//Check Old Password
-if ($opass == $opdata['password']) {
-//Compare New and Confirm
-if ($npass == $cpass){
-//Update Password
-$uq = mysqli_query($connection, "update tbl_user set password='{$npass}' where user_id='{$id}' ");
-if ($uq) {
-echo "<script>alert('Password Changed'); </script>";
-header('location:index.php');
-}
-} else {
-echo "<script>alert('New and Confirm Password Not Match'); </script>";
-}
-} else {
-echo "<script>alert('Old Password Not Match'); </script>";
-}
+    $name = mysqli_real_escape_string($connection,$_POST['name']);
+    $mobile = mysqli_real_escape_string($connection,$_POST['mnumber']);
+	$house = mysqli_real_escape_string($connection,$_POST['house']);
+	$area = mysqli_real_escape_string($connection,$_POST['area']);
+	$landmark = mysqli_real_escape_string($connection,$_POST['landmark']);
+	$pincode= mysqli_real_escape_string($connection,$_POST['pincode']);
+	$city = mysqli_real_escape_string($connection,$_POST['city']);  
+	$state = mysqli_real_escape_string($connection,$_POST['state']);
+	$dstatus = "Pending";
+	$ostatus = "Confirm";
+	$pstatus="Pending";
+   	$address= $house . $area . $landmark . $city . $state;
+	
+	$uid=$_SESSION['id'];
+
+	$oiq = mysqli_query($connection,"insert into tbl_order(user_id,order_date,order_status,order_amount) values('{$uid}','{$date}','{$ostatus}','{100000}') ") or die(mysqli_error($connection));
+		//INSERT RECORD ID Order ID
+		$orderid = mysqli_insert_id($connection);		
+	
+	//order_details
+	$ocq = mysqli_query($connection,"select * from tbl_cart where user_id ='{$uid}'" );
+	while($ocd = mysqli_fetch_array($ocq))
+	{
+		//cart data
+		$pid = $ocd['product_id'];
+		$qty = $ocd['product_qty'];
+		//product data
+		$pq = mysqli_query($connection,"select * from tbl_product where product_id ='{$pid}'" );
+		$pdata =  mysqli_fetch_array($pq);
+		$price = $pdata['price'];
+		//order_details add
+		$odq = mysqli_query($connection,"insert into tbl_orderdetail(order_id,product_id,quantity,price) values('{$orderid}','{$pid}','{$qty}','{$price}') ") or die(mysqli_error($connection));
+		//cart delete
+		mysqli_query($connection,"delete from tbl_cart where cart_id ='{$ocd['cart_id']}'"); 
+	}
+	$pmethod="COD";
+	$pp = 200000;
+	$dquery = mysqli_query($connection,"insert into tbl_delivery(user_name,order_id,phone_number,delivery_address,delivery_status,pincode) values('{$name}','{$orderid}','{$mobile}','{$address}','{$dstatus}','{$pincode}') ") or die(mysqli_error($connection));
+	header("location:payment.php?oid=$orderid");
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
+<!-- Mirrored from p.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 12 Jan 2024 07:37:07 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
-	<title>Computer hub</title>
-	<!-- Required meta tags -->
+<title>Computer hub</title>	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -237,17 +303,23 @@ RIGHT SIDEBAR TOGGLE SECTION
   }
 }
 </style>
-
-
     <!-- top-header -->
-    <?php
-		include('./thempart/header.php');
-	?>
+	<?php
+			include('./thempart/header.php');
+		?>
     <!-- //top-header -->
+
 	<!-- banner-2 -->
-	<div class="page-head_agile_info_w3l inner-contact-page">
+	<div class="page-head_agile_info_w3l inner-checkout-page">
 		<div class="container py-5">
-			<h3 class="title-style text-white pt-5"><span>Change Password</span></h3>
+			<h3 class="title-style text-white pt-5"><span>Checkout</span> Page</h3>
+			<ul class="w3_short pt-3 pb-5">
+				<li>
+					<a href="index.php" class="text-white">Home</a>
+					<i class="fa fa-angle-right mx-2 text-white" aria-hidden="true"></i>
+				</li>
+				<li class="text-light">Checkout</li>
+			</ul>
 		</div>
 	</div>
 	<!-- //banner-2 -->
@@ -264,32 +336,102 @@ RIGHT SIDEBAR TOGGLE SECTION
 
  
 </div>
-	<!-- contact page -->
-	<section class="w3l-contact py-5" id="contact">
+	<!-- checkout page -->
+	<div class="privacy py-5">
 		<div class="container py-md-5 py-4">
-			<div class="mx-auto pt-lg-4 pt-md-5 pt-4" style="max-width:1000px">
-				<div class="row contact-block">
-                <div class="col-md-5 contact-left"> 
-                <form action="#" method="post" id="myform">
-					<div class="form-group">
-							<input type="password" class="form-control" placeholder="Old Password" name="opass" required="">
+			
+			<div class="checkout-left">
+				<div class="address_form_agile mt-sm-5 mt-4">
+					<form method="get" class="creditly-card-form agileinfo_form" id="myform1">
+					<button name="olddetails" class="submit check_out btn">Your Details</button>
+					</form>
+					<h4 class="mb-sm-4 mb-3">Add a new Shipping Details</h4>
+					<form method="post" class="creditly-card-form agileinfo_form" id="myform">
+						<div class="creditly-wrapper wthree, w3_agileits_wrapper">
+							<div class="information-wrapper">
+								<div class="first-row">
+									<div class="controls form-group">
+										<input class="billing-address-name form-control" type="text" name="name"
+											placeholder="Full Name" required>
+									</div>
+									<div class="w3_agileits_card_number_grids">
+										<div class="w3_agileits_card_number_grid_left form-group">
+											<div class="controls">
+												<input type="number" class="form-control" placeholder="Mobile Number"
+													name="mnumber" maxlength="10" required>
+											</div>
+										</div>
+										<div class="w3_agileits_card_number_grid_right form-group">
+											<div class="controls">
+												<input type="text" class="form-control" placeholder="Flat, House-no, Apartment"
+													name="house" required>
+											</div>
+										</div>
+										<div class="w3_agileits_card_number_grid_right form-group">
+											<div class="controls">
+												<input type="text" class="form-control" placeholder="Area, Street"
+													name="area" required>
+											</div>
+										</div>
+										
+										<div class="w3_agileits_card_number_grid_right form-group">
+											<div class="controls">
+												<input type="text" class="form-control" placeholder="Landmark"
+													name="landmark" required>
+											</div>
+										</div>
+										
+									</div>
+									<div class="w3_agileits_card_number_grid_right form-group">
+											<div class="controls">
+												<input type="number" class="form-control" placeholder="Pincode"
+													name="pincode" maxlength="6" required>
+											</div>
+										</div>
+									</div>
+									<div class="controls form-group">
+										<input type="text" class="form-control" placeholder="Town/City" name="city"
+											required>
+									</div>
+									<div class="w3_agileits_card_number_grid_right form-group">
+											<div class="controls">
+												<input type="text" class="form-control" placeholder="State"
+													name="state" required>
+											</div>
+										</div>
+									<div class="controls form-group">
+										<select class="option-w3ls">
+											<option>Select Address type</option>
+											<option>Office</option>
+											<option>Home</option>
+											<option>Commercial</option>
+										</select>
+									</div>
+										<input type="submit">
+									</div>
+								</div>
+							</div>
 						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="New Password" name="npass" required="">
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="Confirm Password" name="cpass" required="">
-						</div>
-						<div class="right-w3l">
-							<input type="submit"  class="form-control" value="Change ">
-						</div>
-                    </div>
-				</form>
+					</form>
+					<div class="privacy py-sm-5 py-5">
+
+	</div>
+					<div class="checkout-right-basket">
+						<a href="payment.php">Make a Payment
+							<span class="far fa-hand-point-right"></span>
+						</a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</section>
-	<!-- //contact page -->
+	</div>
+	<!-- //checkout page -->
+
+	<!-- middle section -->
+	
+
+	
+	<!-- middle section -->
 <div style="margin: 8px auto; display: block; text-align:center;">
 
 <!---728x90--->
@@ -309,12 +451,12 @@ RIGHT SIDEBAR TOGGLE SECTION
 	<script type="text/javascript">
 		$(document).ready(function () {
 			/*
-			    var defaults = {
-			    containerID: 'toTop', // fading element id
-			    containerHoverID: 'toTopHover', // fading element hover id
-			    scrollSpeed: 1200,
-			    easingType: 'linear' 
-			    };
+				var defaults = {
+				containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear' 
+				};
 			*/
 
 			$().UItoTop({
@@ -423,6 +565,50 @@ RIGHT SIDEBAR TOGGLE SECTION
 	</script>
 	<!-- //password-script -->
 
+	<!-- quantity -->
+	<script>
+		$('.value-plus').on('click', function () {
+			var divUpd = $(this).parent().find('.value'),
+				newVal = parseInt(divUpd.text(), 10) + 1;
+			divUpd.text(newVal);
+		});
+
+		$('.value-minus').on('click', function () {
+			var divUpd = $(this).parent().find('.value'),
+				newVal = parseInt(divUpd.text(), 10) - 1;
+			if (newVal >= 1) divUpd.text(newVal);
+		});
+	</script>
+	<!--quantity-->
+	<script>
+		$(document).ready(function (c) {
+			$('.close1').on('click', function (c) {
+				$('.rem1').fadeOut('slow', function (c) {
+					$('.rem1').remove();
+				});
+			});
+		});
+	</script>
+	<script>
+		$(document).ready(function (c) {
+			$('.close2').on('click', function (c) {
+				$('.rem2').fadeOut('slow', function (c) {
+					$('.rem2').remove();
+				});
+			});
+		});
+	</script>
+	<script>
+		$(document).ready(function (c) {
+			$('.close3').on('click', function (c) {
+				$('.rem3').fadeOut('slow', function (c) {
+					$('.rem3').remove();
+				});
+			});
+		});
+	</script>
+	<!-- //quantity -->
+
 	<!-- theme switch js (light and dark)-->
 	<script src="js/theme-change.js"></script>
 	<script>
@@ -477,8 +663,7 @@ RIGHT SIDEBAR TOGGLE SECTION
 	<!-- //bootstrap-->
 	<!-- //Js scripts -->
 
-<script>(function(){var js = "window['__CF$cv$params']={r:'8443ba6cd8aa0336',t:'MTcwNTA0NDk4NC40NzEwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../../../../cdn-cgi/challenge-platform/h/b/scripts/jsd/c8377512/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
-
+<script>(function(){var js = "window['__CF$cv$params']={r:'8443ba450f160336',t:'MTcwNTA0NDk3OC4wMjUwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../../../../cdn-cgi/challenge-platform/h/b/scripts/jsd/c8377512/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
 
 
 <script src="jquery/jquery-3.7.1.js"></script>
@@ -491,6 +676,5 @@ $("#myform").validate();
 <style>
 .error{
 color:red;
-}
-</style>
+} 	
 </html>

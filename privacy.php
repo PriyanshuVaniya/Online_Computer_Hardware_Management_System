@@ -1,40 +1,15 @@
 <?php
 session_start();
-include('connection.php');
-if (!isset($_SESSION['id'])) {
-	header("location:login.php");
-	}
-
-if($_POST)
-{
-	$opass = $_POST['opass'];
-	$npass = $_POST['npass'];
-	$cpass = $_POST['cpass'];
-	$id = $_SESSION['id'];
-    $opq = mysqli_query($connection,"select * from tbl_user where user_id = '{$id}'");
-$opdata = mysqli_fetch_array($opq);
-//Check Old Password
-if ($opass == $opdata['password']) {
-//Compare New and Confirm
-if ($npass == $cpass){
-//Update Password
-$uq = mysqli_query($connection, "update tbl_user set password='{$npass}' where user_id='{$id}' ");
-if ($uq) {
-echo "<script>alert('Password Changed'); </script>";
-header('location:index.php');
-}
-} else {
-echo "<script>alert('New and Confirm Password Not Match'); </script>";
-}
-} else {
-echo "<script>alert('Old Password Not Match'); </script>";
-}
-}
+include 'connection.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
+
+<!-- Mirrored from p.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/privacy.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 12 Jan 2024 07:37:43 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
-	<title>Computer hub</title>
+<title>Computer hub</title>
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -237,17 +212,23 @@ RIGHT SIDEBAR TOGGLE SECTION
   }
 }
 </style>
+	<!-- top-header -->
+	<?php
+			include('./thempart/header.php');
+		?>
+	<!-- //top-header -->
 
-
-    <!-- top-header -->
-    <?php
-		include('./thempart/header.php');
-	?>
-    <!-- //top-header -->
 	<!-- banner-2 -->
 	<div class="page-head_agile_info_w3l inner-contact-page">
 		<div class="container py-5">
-			<h3 class="title-style text-white pt-5"><span>Change Password</span></h3>
+			<h3 class="title-style text-white pt-5"><span>Privacy</span> Policy</h3>
+			<ul class="w3_short pt-3 pb-5">
+				<li>
+					<a href="index.php" class="text-white">Home</a>
+					<i class="fa fa-angle-right mx-2 text-white" aria-hidden="true"></i>
+				</li>
+				<li class="text-light">Privacy Policy</li>
+			</ul>
 		</div>
 	</div>
 	<!-- //banner-2 -->
@@ -264,32 +245,44 @@ RIGHT SIDEBAR TOGGLE SECTION
 
  
 </div>
-	<!-- contact page -->
-	<section class="w3l-contact py-5" id="contact">
+	<!-- privacy -->
+	<div class="terms py-4">
 		<div class="container py-md-5 py-4">
-			<div class="mx-auto pt-lg-4 pt-md-5 pt-4" style="max-width:1000px">
-				<div class="row contact-block">
-                <div class="col-md-5 contact-left"> 
-                <form action="#" method="post" id="myform">
-					<div class="form-group">
-							<input type="password" class="form-control" placeholder="Old Password" name="opass" required="">
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="New Password" name="npass" required="">
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="Confirm Password" name="cpass" required="">
-						</div>
-						<div class="right-w3l">
-							<input type="submit"  class="form-control" value="Change ">
-						</div>
-                    </div>
-				</form>
-				</div>
-			</div>
+			<h6 class="mb-2">Privacy Policy</h6>
+			<p class="font-weight-light pl-sm-4 mb-2">We may collect Personally Identifiable Information (PII) such as your name, address, email, and phone number during the registration or checkout process.
+			</p>
+			<p class="font-weight-light pl-sm-4 mb-2">Other Information may include non-personal data such as your IP address, browser type, and device information. </p>
+
+			<h6 class="mt-4 mb-2">Personally Identifiable Information and other Information</h6>
+			<p class="font-weight-light pl-sm-4 mb-2">We implement industry-standard security measures to protect your information from unauthorized access, disclosure, alteration, and destruction.</p>
+			<p class="font-weight-light pl-sm-4 mb-2">Your sensitive information, such as credit card details, is encrypted using secure socket layer technology (SSL).</p>
+
+			<h6 class="mt-4 mb-2">Security Precautions</h6>
+			<p class="font-weight-light pl-sm-4 mb-2">We implement industry-standard security measures to protect your information from unauthorized access, disclosure, alteration, and destruction.</p>
+			<p class="font-weight-light pl-sm-4 mb-2">Your sensitive information, such as credit card details, is encrypted using secure socket layer technology (SSL).</p>
+
+			<h6 class="mt-4 mb-2">What Information Can I Access?</h6>
+			<p class="font-weight-light pl-sm-4 mb-2"> You can access and update your account information through the "My Account" section on our website.</p>
+			
+
+			<h6 class="mt-4 mb-2">Statistical Information</h6>
+			<p class="font-weight-light pl-sm-4 mb-2">We may collect and analyze statistical information about your use of the website to enhance user experience and improve our services.
+			</p>
+
+			<h6 class="mt-4 mb-2">User Consent</h6>
+			<p start="1" class="pl-sm-4 pl-3">
+				By using our website, you consent to the collection and use of your information as outlined in this Privacy Policy.
+</p>
+			<h6 class="mt-4 mb-2">Policy updates</h6>
+			<p class="font-weight-light pl-sm-4 mb-2"> We may update this Privacy Policy from time to time. Any changes will be posted on this page with the revised date.</p>
 		</div>
-	</section>
-	<!-- //contact page -->
+	</div>
+	<!-- //privacy -->
+
+	<!-- middle section -->
+	
+	
+	<!-- middle section -->
 <div style="margin: 8px auto; display: block; text-align:center;">
 
 <!---728x90--->
@@ -300,7 +293,7 @@ RIGHT SIDEBAR TOGGLE SECTION
 		include('./thempart/footer.php')
 	?>
 	<!-- //footer -->
-		<!-- js-files -->
+	<!-- js-files -->
 	<!-- common jquery plugin -->
 	<script data-cfasync="false" src="../../../../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/jquery-3.3.1.min.js"></script>
 	<!-- //common jquery plugin -->
@@ -309,12 +302,12 @@ RIGHT SIDEBAR TOGGLE SECTION
 	<script type="text/javascript">
 		$(document).ready(function () {
 			/*
-			    var defaults = {
-			    containerID: 'toTop', // fading element id
-			    containerHoverID: 'toTopHover', // fading element hover id
-			    scrollSpeed: 1200,
-			    easingType: 'linear' 
-			    };
+				var defaults = {
+				containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear' 
+				};
 			*/
 
 			$().UItoTop({
@@ -462,6 +455,7 @@ RIGHT SIDEBAR TOGGLE SECTION
 	</script>
 	<!-- //theme switch js (light and dark)-->
 
+
 	<!-- disable body scroll which navbar is in active -->
 	<script>
 		$(function () {
@@ -477,20 +471,8 @@ RIGHT SIDEBAR TOGGLE SECTION
 	<!-- //bootstrap-->
 	<!-- //Js scripts -->
 
-<script>(function(){var js = "window['__CF$cv$params']={r:'8443ba6cd8aa0336',t:'MTcwNTA0NDk4NC40NzEwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../../../../cdn-cgi/challenge-platform/h/b/scripts/jsd/c8377512/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+<script>(function(){var js = "window['__CF$cv$params']={r:'8443ba907ac70337',t:'MTcwNTA0NDk5MC4xMjMwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../../../../cdn-cgi/challenge-platform/h/b/scripts/jsd/c8377512/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
 
 
-
-<script src="jquery/jquery-3.7.1.js"></script>
-<script src="jquery/jquery.validate.js"></script>
-<script>
-$(document).ready(function(){
-$("#myform").validate();
-});
-</script>
-<style>
-.error{
-color:red;
-}
-</style>
+<!-- Mirrored from p.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/privacy.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 12 Jan 2024 07:37:43 GMT -->
 </html>

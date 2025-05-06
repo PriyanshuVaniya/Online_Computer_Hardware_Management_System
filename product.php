@@ -6,8 +6,8 @@ include('connection.php');
 <html lang="en">
 
 
-<!-- Mirrored from p.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 12 Jan 2024 07:37:07 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<!-- Mirrored from p.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/product.php by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 12 Jan 2024 07:37:07 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/php;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
 <title>Computer hub</title>
 	<!-- Required meta tags -->
@@ -77,8 +77,6 @@ if(typeof _bsa !== 'undefined' && _bsa) {
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
 }
-
-
 #w3lDemoBar.w3l-demo-bar {
   top: 0;
   right: 0;
@@ -91,7 +89,6 @@ if(typeof _bsa !== 'undefined' && _bsa) {
   border-top-left-radius: 9px;
   border-bottom-left-radius: 9px;
 }
-
 #w3lDemoBar.w3l-demo-bar a {
   display: block;
   color: #e6ebff;
@@ -101,15 +98,12 @@ if(typeof _bsa !== 'undefined' && _bsa) {
   margin-bottom: 20px;
   text-align: center;
 }
-
 #w3lDemoBar.w3l-demo-bar span.w3l-icon {
   display: block;
 }
-
 #w3lDemoBar.w3l-demo-bar a:hover {
   opacity: 1;
 }
-
 #w3lDemoBar.w3l-demo-bar .w3l-icon svg {
   color: #e6ebff;
 }
@@ -152,7 +146,6 @@ if(typeof _bsa !== 'undefined' && _bsa) {
 /* ============================================================
 RIGHT SIDEBAR SECTION
 ============================================================ */
-
 #right-sidebar {
   width: 90px;
   position: fixed;
@@ -167,12 +160,9 @@ RIGHT SIDEBAR SECTION
   transition: all .5s ease-in-out;
   overflow-y: auto;
 }
-
-
 /* ============================================================
 RIGHT SIDEBAR TOGGLE SECTION
 ============================================================ */
-
 .hide-right-bar-notifications {
   margin-right: -300px !important;
   -webkit-transition: all .3s ease-in-out;
@@ -180,19 +170,14 @@ RIGHT SIDEBAR TOGGLE SECTION
   -o-transition: all .3s ease-in-out;
   transition: all .3s ease-in-out;
 }
-
-
-
 @media (max-width: 992px) {
   #w3lDemoBar.w3l-demo-bar a.desktop-mode{
       display: none;
-
   }
 }
 @media (max-width: 767px) {
   #w3lDemoBar.w3l-demo-bar a.tablet-mode{
       display: none;
-
   }
 }
 @media (max-width: 568px) {
@@ -212,68 +197,119 @@ RIGHT SIDEBAR TOGGLE SECTION
   }
 }
 </style>
-
 	<!-- top-header -->
-		<?php
+	<?php
 			include('./thempart/header.php');
+		
+			if (isset($_GET['pageno'])) {
+				$pageno = $_GET['pageno'];
+			} else {
+				$pageno = 1;
+			}
+			if(isset($_GET['category_id']))
+			{
+				if($_GET['category_id']!="")
+				{
+					
+				$search_category="and category_id='{$_GET['category_id']}'";
+				$category_id=$_GET['category_id'];
+					}
+					else{
+						$search_category="";
+						$category_id="";		
+					}
+				
+			}
+			else{
+				$search_category="";
+				$category_id="";
+			}
+			
+			if(isset($_GET['brand_id']))
+			{
+				if($_GET['brand_id']!="")
+				{
+					
+				$search_brand="and brand_id='{$_GET['brand_id']}'";
+				$brand_id=$_GET['brand_id'];
+					}
+					else{
+						$search_brand="";
+						$brand_id="";		
+					}
+				
+			}
+			else{
+				$search_brand="";
+				$brand_id="";
+			}
+			
+			if(isset($_GET['sprice']))
+			{
+				if($_GET['sprice']!="")
+				{
+					$sprice=$_GET['sprice'];
+					$eprice=$_GET['eprice'];	
+				$search_price="and price between '{$sprice}' and '{$eprice}'";
+				
+					}
+					else{
+						$search_price="";
+						$sprice="";
+						$eprice="";		
+					}
+				
+			}
+			else{
+				$search_price="";
+				$sprice="";
+				$eprice="";
+			}
+			
+			if(isset($_GET['q']))
+			{
+				if($_GET['q']!="")
+				{
+					$q=$_GET['q'];	
+				$search_name="and product_name like '%{$q}%'";
+				
+					}
+					else{
+						$search_name="";
+						$q="";		
+					}
+				
+			}
+			else{
+				$search_name="";
+				$q="";
+			}
+			
+			$where ="where is_display='1' ".$search_category." ".$search_brand." ".$search_price."".$search_name;
+		
 		?>
 	<!-- //top-header -->
-	<!-- header-bottom-->
-		
-	<!-- //header-bottom -->
-	<!-- navigation -->
 
-	<!-- //navigation -->
-
-	<!-- banner -->
-	<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-		<!-- Indicators-->
-		<ol class="carousel-indicators">
-			<li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-			<li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-			<li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-			<li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-		</ol>
-		<div class="carousel-inner">
-			<div class="carousel-item item1 active">
-				<div class="banner-style d-flex align-items-center">
-					<div class="container">
-						<div class="w3l-space-banner">
-							<div class="carousel-caption-banner" style="max-width:500px">
-								<p>Get flat
-									<span>10%</span> Cashback</p>
-								<h3 class="mt-2">Exciting Deals on Televisions</h3>
-								<a class="btn btn-style mt-4" href="product.php">Shop Now </a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="carousel-item item2">
-				<div class="banner-style d-flex align-items-center">
-					<div class="container">
-						<div class="w3l-space-banner">
-							<div class="carousel-caption-banner" style="max-width:500px">
-								<p>Top
-									<span>Brands</span> lowest <span>Prices</span></p>
-								<h3 class="mt-2">Wide Range of Mobile Phones!</h3>
-								<a class="btn btn-style mt-4" href="product.">Shop Now </a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+	<!-- banner-2 -->
+	<div class="page-head_agile_info_w3l">
+		<div class="container py-5">
+			<h3 class="title-style pt-5">The Best <span>Deals</span> on Electronics </h3>
+			<ul class="w3_short pt-3 pb-5">
+				<li>
+					<a href="index.php">Home</a>
+					<i class="fa fa-angle-right mx-2" aria-hidden="true"></i>
+				</li>
+				<li>Electronics</li>
+			</ul>
 		</div>
-		<a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="sr-only">Previous</span>
-		</a>
-		<a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="sr-only">Next</span>
-		</a>
 	</div>
-	<!-- //banner -->
+	<!-- //banner-2 -->
+	<!-- page -->
+	<div class="services-breadcrumb">
+		<div class="agile_inner_breadcrumb">
+		</div>
+	</div>
+	<!-- //page -->
 <div style="margin: 8px auto; display: block; text-align:center;">
 
 <!---728x90--->
@@ -281,18 +317,87 @@ RIGHT SIDEBAR TOGGLE SECTION
  
 </div>
 	<!-- top Products -->
-	<div class="ads-grid py-5">
-		<div class="container py-md-5 py-4">
+	<div class="ads-grid py-sm-5 py-4">
+		<div class="container py-xl-4 py-lg-2">
 			<!-- tittle heading -->
 			<h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
 				<span class="font-weight-normal">Our</span> New Products</h3>
 			<!-- //tittle heading -->
+
+
 			<div class="row">
 				<!-- product right -->
 				<div class="col-lg-3 mt-lg-0 mt-4 p-lg-0 order-lg-first order-last">
 					<div class="side-bar p-sm-4 p-3">
+						
+						<!--  Brand -->
+						<div class="left-side py-2">
+													<h3 class="agileits-sear-head mb-3">Brand</h3>
+
+						<?php
+						$selectbar = mysqli_query($connection,"SELECT * FROM tbl_brand") or die(mysqli_error($connection));
+						?>
+													<ul>
+														<li>
+						<?php
+						while($seleccatrow= mysqli_fetch_array($selectbar))
+						{ 
+							echo "<a href='product.php?brand_id={$seleccatrow['brand_id']}'> {$seleccatrow['brand_name']} </br> </a>"; 
+						}
+						?>
+														</li>
+													</ul>
+												</div>
+
+						<!-- //Brand -->
+						<!-- category -->
+						<div class="left-side py-2">
+							<h3 class="agileits-sear-head mb-3">Categorys</h3>
+
+<?php
+$selectcat = mysqli_query($connection,"SELECT * FROM tbl_category") or die(mysqli_error($connection));
+?>
+							<ul>
+								<li>
+<?php
+while($selectcatrow= mysqli_fetch_array($selectcat))
+{ 
+	echo "<a href='product.php?category_id={$selectcatrow['category_id']}'> {$selectcatrow['category_name']} </br> </a>"; 
+}
+?>
+								</li>
+							</ul>
+						</div>
+						<!-- //category -->
+						<!-- price -->
+						<div class="range py-2">
+							<h3 class="agileits-sear-head mb-3">Price</h3>
+							<div class="w3l-range">
+								<ul>
+									<li class="my-1">
+										<a href="product.php?sprice=1&eprice=999">Under &#8377;1,000</a>
+									</li>
+									<li class="my-1">
+										<a href="product.php?sprice=1000&eprice=5000">&#8377;1,000 - &#8377;5,000</a>
+									</li>
+									<li class="my-1">
+										<a href="product.php?sprice=5000&eprice=10000">&#8377;5,000 - &#8377;10,000</a>
+									</li>
+									<li class="my-1">
+										<a href="product.php?sprice=10000&eprice=20000">&#8377;10,000 - &#8377;20,000</a>
+									</li>
+									<li class="my-1">
+										<a href="product.php?sprice=20000&eprice=30000">&#8377;20,000 &#8377;30,000</a>
+									</li>
+									<li class="my-1">
+										<a href="product.php?sprice=30000&eprice=100000">Over &#8377;30,000</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<!-- //price -->
 						<!-- reviews -->
-						<div class="customer-rev left-side py-2">
+						<!---<div class="customer-rev left-side py-2">
 							<h3 class="agileits-sear-head mb-3">Customer Review</h3>
 							<ul>
 								<li>
@@ -340,43 +445,11 @@ RIGHT SIDEBAR TOGGLE SECTION
 									</a>
 								</li>
 							</ul>
-						</div>
+						</div>-->
 						<!-- //reviews -->
-						<!-- price -->
-						<div class="range py-2">
-							<h3 class="agileits-sear-head mb-3">Price</h3>
-							<div class="w3l-range">
-								<ul>
-									<li>
-									    <input type="checkbox" class="checked">
-										<span class="span">Under &#8377;1,000</span>
-									</li>
-									<li class="my-1">
-									    <input type="checkbox" class="checked">
-										<span class="span">&#8377;1,000 - &#8377;5,000</span>
-									</li>
-									<li>
-									    <input type="checkbox" class="checked">
-										<span class="span">&#8377;5,000 - &#8377;10,000</span>
-									</li>
-									<li class="my-1">
-										<input type="checkbox" class="checked">
-										<span class="span">&#8377;10,000 - &#8377;20,000</span>
-									</li>
-									<li>
-										<input type="checkbox" class="checked">
-										<span class="span">&#8377;20,000 &#8377;30,000</span>
-									</li>
-									<li class="mt-1">
-										<input type="checkbox" class="checked">
-										<span class="span">Over &#8377;30,000</span>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<!-- //price -->
+						
 						<!-- discounts -->
-						<div class="left-side py-2">
+						<!--<div class="left-side py-2">
 							<h3 class="agileits-sear-head mb-3">Discount</h3>
 							<ul>
 								<li>
@@ -405,56 +478,8 @@ RIGHT SIDEBAR TOGGLE SECTION
 								</li>
 							</ul>
 						</div>
+-->
 						<!-- //discounts -->
-						<!-- electronics -->
-						<div class="left-side py-2">
-							<h3 class="agileits-sear-head mb-3">Electronics</h3>
-							<ul>
-						
-								<li>
-									<input type="checkbox" class="checked">
-									<span class="span">Cameras</span>
-								</li>
-								
-								<li>
-									<input type="checkbox" class="checked">
-									<span class="span">Computers & Accessories</span>
-								</li>
-								
-								<li>
-									<input type="checkbox" class="checked">
-									<span class="span">Headphones</span>
-								</li>
-								<li>
-									<input type="checkbox" class="checked">
-									<span class="span">Speakers</span>
-								</li>
-								<li>
-									<input type="checkbox" class="checked">
-									<span class="span">Tablets</span>
-								</li>
-								<li>
-									<input type="checkbox" class="checked">
-									<span class="span">Telephones & Accessories</span>
-								</li>
-								<li>
-									<input type="checkbox" class="checked">
-									<span class="span">Wearable Technology</span>
-								</li>
-							</ul>
-						</div>
-						<!-- //electronics -->
-						<!-- delivery -->
-						<div class="left-side py-2">
-							<h3 class="agileits-sear-head mb-3">Cash On Delivery</h3>
-							<ul>
-								<li>
-									<input type="checkbox" class="checked">
-									<span class="span">Eligible for Cash On Delivery</span>
-								</li>
-							</ul>
-						</div>
-						<!-- //delivery -->
 						<!-- arrivals -->
 						<div class="left-side py-2">
 							<h3 class="agileits-sear-head mb-3">New Arrivals</h3>
@@ -499,9 +524,9 @@ RIGHT SIDEBAR TOGGLE SECTION
 						</div>
 						<!-- //best seller -->
 					</div>
-					<!-- //product right -->
+					<!-- //product left -->
 				</div>
-				<!-- product left -->
+				<!-- product right -->
 				<div class="agileinfo-ads-display col-lg-9 order-lg-last order-first">
 					<div class="wrapper">
 						<!-- first section -->
@@ -509,10 +534,44 @@ RIGHT SIDEBAR TOGGLE SECTION
 							<div class="row">
 							
 							<!-- Start -->
+<?php
 
-							<?php
-										$i=0;
-										$q = mysqli_query($connection,"SELECT * FROM tbl_product");
+
+///
+///
+///
+///
+//
+///
+
+///
+///
+///
+///
+
+
+///
+///
+///
+///
+$no_of_records_per_page = 12;
+$offset = ($pageno - 1) * $no_of_records_per_page;
+
+$query_1 = mysqli_query($connection, "SELECT COUNT(*) as total FROM tbl_product $where");
+$result = mysqli_fetch_array($query_1);
+$total_rows = $result["total"];
+$total_pages = ceil($total_rows / $no_of_records_per_page);
+
+	
+
+	$q = mysqli_query($connection,"SELECT * FROM tbl_product $where LIMIT $offset, $no_of_records_per_page");
+	$count=mysqli_num_rows($q);
+	if($count>0){
+
+		///
+		///
+		///
+
 										while($row=mysqli_fetch_array($q))
 										{
 										?>
@@ -536,34 +595,56 @@ RIGHT SIDEBAR TOGGLE SECTION
 												<span class="item_price">
 													&#8377;<?php echo $row["price"];?>
 												</span>
-												<del>&#8377;280.00</del>
+												<del>&#8377;<?php echo $row["price"] + 500;?></del>
 											</div>
-			<div
-				class='snipcart-details top_brand_home_details item_add single-item hvr-outline-out'>
-				<form action='#' method='post'>
-					<fieldset>
-						<input type='hidden' name='cmd' value='_cart' />
-						<input type='hidden' name='add' value='1' />
-						<input type='hidden' name='business' value=' ' />
-						<input type='hidden' name='item_name' value='<?php echo $row["product_name"];?>' />
-						<input type='hidden' name='amount' value='<?php echo $row["price"];?>' />
-						<input type='hidden' name='discount_amount' value='1.00' />
-						<input type='hidden' name='currency_code' value='INR' />
-						<input type='hidden' name='return' value=' ' />
-						<input type='hidden' name='cancel_return' value=' ' />
-						<input type='submit' name='submit' value='Add to cart'
-							class='btn btn-style btn-style-secondary mt-3' />
-					</fieldset>
-				</form>
-			</div>
+											<button class="btn btn-style btn-style-secondary mt-3">ADD TO CART</button>
 		</div>
 	</div>
 </div>
 <?php
-$i++;
 }
 ?>
+<!-- -->
+<!-- -->
+<!-- -->
+<!-- -->
+<div class="col-md-12 mt-5"> 
+<nav aria-label="Page navigation example">
+<ul class="pagination">
+            <li><a class="page-link" href="?pageno=1&category_id=<?php echo $category_id;?>&brand_id=<?php echo $brand_id;?>&sprice=<?php echo $sprice;?>&eprice=<?php echo $eprice;?>">First</a></li>
+            <li class="page-item <?php if ($pageno <= 1) {
+                            echo 'disabled';
+                        } ?>">
+                <a class="page-link" href="<?php if ($pageno <= 1) {
+                                echo '#';
+                            } else {
+                                echo "?pageno=" . ($pageno - 1)."&category_id=".$category_id."&brand_id=".$brand_id."&sprice=".$sprice."&eprice=".$eprice;
+                            } ?>">Prev</a>
+            </li>
+            <li class="page-item <?php if ($pageno >= $total_pages) {
+                            echo 'disabled';
+                        } ?>">
+                <a class="page-link" href="<?php if ($pageno >= $total_pages) {
+                                echo '#';
+                            } else {
+                                echo "?pageno=" . ($pageno + 1)."&category_id=".$category_id."&brand_id=".$brand_id."&sprice=".$sprice."&eprice=".$eprice;
+                            } ?>">Next</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="?pageno=<?php echo $total_pages; ?>&category_id=<?php echo $category_id;?>&brand_id=<?php echo $brand_id;?>&sprice=<?php echo $sprice;?>&eprice=<?php echo $eprice;?>">Last</a></li>
+        </ul>
+						</nav>
 
+						
+						</div>	
+						
+						<?php }  else{
+							echo "<h3>No Record Found</h3>";
+						} ?>
+<!-- -->
+<!-- -->
+<!-- -->
+<!-- -->
+<!-- -->	
 						
 								
 								<!-- -->
@@ -579,41 +660,36 @@ $i++;
 						<!-- //fourth section -->
 					</div>
 				</div>
-				<!-- //product left -->
+				<!-- //product right -->
 			</div>
 		</div>
 	</div>
-	
 	<!-- //top products -->
 
 	<!-- middle section -->
-
-
-
-
-
-
+	
+	
 
 	
 	<!-- middle section -->
 <div style="margin: 8px auto; display: block; text-align:center;">
+
 <!---728x90--->
+ 
 </div>
 	<!-- footer -->
 	<?php
-
-		include('./thempart/footer.php');
-
+		include('./thempart/footer.php')
 	?>
 	<!-- //footer -->
-	<!-- js-files -->
+		<!-- js-files -->
 	<!-- common jquery plugin -->
 	<script data-cfasync="false" src="../../../../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/jquery-3.3.1.min.js"></script>
 	<!-- //common jquery plugin -->
 
 	<!-- here stars scrolling icon -->
 	<script type="text/javascript">
-		$(document).ready(function () {
+		&#8377;(document).ready(function () {
 			/*
 				var defaults = {
 				containerID: 'toTop', // fading element id
@@ -623,7 +699,7 @@ $i++;
 				};
 			*/
 
-			$().UItoTop({
+			&#8377;().UItoTop({
 				easingType: 'easeOutQuart'
 			});
 
@@ -637,11 +713,11 @@ $i++;
 	<script type="text/javascript" src="js/move-top.js"></script>
 	<script type="text/javascript" src="js/easing.js"></script>
 	<script type="text/javascript">
-		jQuery(document).ready(function ($) {
-			$(".scroll").click(function (event) {
+		jQuery(document).ready(function (&#8377;) {
+			&#8377;(".scroll").click(function (event) {
 				event.preventDefault();
-				$('html,body').animate({
-					scrollTop: $(this.hash).offset().top
+				&#8377;('php,body').animate({
+					scrollTop: &#8377;(this.hash).offset().top
 				}, 1000);
 			});
 		});
@@ -650,15 +726,15 @@ $i++;
 
 	<!-- nav smooth scroll -->
 	<script>
-		$(document).ready(function () {
-			$(".dropdown").hover(
+		&#8377;(document).ready(function () {
+			&#8377;(".dropdown").hover(
 				function () {
-					$('.dropdown-menu', this).stop(true, true).slideDown("fast");
-					$(this).toggleClass('open');
+					&#8377;('.dropdown-menu', this).stop(true, true).slideDown("fast");
+					&#8377;(this).toggleClass('open');
 				},
 				function () {
-					$('.dropdown-menu', this).stop(true, true).slideUp("fast");
-					$(this).toggleClass('open');
+					&#8377;('.dropdown-menu', this).stop(true, true).slideUp("fast");
+					&#8377;(this).toggleClass('open');
 				}
 			);
 		});
@@ -668,8 +744,8 @@ $i++;
 	<!-- popup modal (for location)-->
 	<script src="js/jquery.magnific-popup.js"></script>
 	<script>
-		$(document).ready(function () {
-			$('.popup-with-zoom-anim').magnificPopup({
+		&#8377;(document).ready(function () {
+			&#8377;('.popup-with-zoom-anim').magnificPopup({
 				type: 'inline',
 				fixedContentPos: false,
 				fixedBgPos: true,
@@ -720,7 +796,6 @@ $i++;
 			document.getElementById("password1").onchange = validatePassword;
 			document.getElementById("password2").onchange = validatePassword;
 		}
-
 		function validatePassword() {
 			var pass2 = document.getElementById("password2").value;
 			var pass1 = document.getElementById("password1").value;
@@ -737,7 +812,7 @@ $i++;
 	<script src="js/theme-change.js"></script>
 	<script>
 		function autoType(elementClass, typingSpeed) {
-			var thhis = $(elementClass);
+			var thhis = &#8377;(elementClass);
 			thhis.css({
 				"position": "relative",
 				"display": "inline-block"
@@ -762,8 +837,7 @@ $i++;
 				}
 			}, 1500);
 		}
-
-		$(document).ready(function () {
+		&#8377;(document).ready(function () {
 			// Now to start autoTyping just call the autoType function with the 
 			// class of outer div
 			// The second paramter is the speed between each letter is typed.   
@@ -774,9 +848,9 @@ $i++;
 
 	<!-- disable body scroll which navbar is in active -->
 	<script>
-		$(function () {
-			$('.navbar-toggler').click(function () {
-				$('body').toggleClass('noscroll');
+		&#8377;(function () {
+			&#8377;('.navbar-toggler').click(function () {
+				&#8377;('body').toggleClass('noscroll');
 			})
 		});
 	</script>
@@ -787,5 +861,8 @@ $i++;
 	<!-- //bootstrap-->
 	<!-- //Js scripts -->
 
-<script>(function(){var js = "window['__CF$cv$params']={r:'8443ba414e5e0337',t:'MTcwNTA0NDk3Ny40MTAwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../../../../cdn-cgi/challenge-platform/h/b/scripts/jsd/c8377512/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
-</html>
+<script>(function(){var js = "window['__CF&#8377;cv&#8377;params']={r:'8443ba4a0cd80337',t:'MTcwNTA0NDk3OC44NDcwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../../../../cdn-cgi/challenge-platform/h/b/scripts/jsd/c8377512/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerphp = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+
+
+<!-- Mirrored from p.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/product.php by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 12 Jan 2024 07:37:12 GMT -->
+</php>

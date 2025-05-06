@@ -1,41 +1,15 @@
 <?php
 session_start();
-include('connection.php');
-if (!isset($_SESSION['id'])) {
-	header("location:login.php");
-	}
-
-if($_POST)
-{
-	$opass = $_POST['opass'];
-	$npass = $_POST['npass'];
-	$cpass = $_POST['cpass'];
-	$id = $_SESSION['id'];
-    $opq = mysqli_query($connection,"select * from tbl_user where user_id = '{$id}'");
-$opdata = mysqli_fetch_array($opq);
-//Check Old Password
-if ($opass == $opdata['password']) {
-//Compare New and Confirm
-if ($npass == $cpass){
-//Update Password
-$uq = mysqli_query($connection, "update tbl_user set password='{$npass}' where user_id='{$id}' ");
-if ($uq) {
-echo "<script>alert('Password Changed'); </script>";
-header('location:index.php');
-}
-} else {
-echo "<script>alert('New and Confirm Password Not Match'); </script>";
-}
-} else {
-echo "<script>alert('Old Password Not Match'); </script>";
-}
-}
+include 'connection.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
+
+<!-- Mirrored from p.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/help.php by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 12 Jan 2024 07:37:43 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
-	<title>Computer hub</title>
-	<!-- Required meta tags -->
+<title>Computer hub</title>	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -237,17 +211,23 @@ RIGHT SIDEBAR TOGGLE SECTION
   }
 }
 </style>
-
-
     <!-- top-header -->
-    <?php
-		include('./thempart/header.php');
-	?>
+	<?php
+			include('./thempart/header.php');
+		?>
     <!-- //top-header -->
+
 	<!-- banner-2 -->
 	<div class="page-head_agile_info_w3l inner-contact-page">
 		<div class="container py-5">
-			<h3 class="title-style text-white pt-5"><span>Change Password</span></h3>
+			<h3 class="title-style text-white pt-5">Need some <span>Help?</span></h3>
+			<ul class="w3_short pt-3 pb-5">
+				<li>
+					<a href="index.php" class="text-white">Home</a>
+					<i class="fa fa-angle-right mx-2 text-white" aria-hidden="true"></i>
+				</li>
+				<li class="text-light">Help</li>
+			</ul>
 		</div>
 	</div>
 	<!-- //banner-2 -->
@@ -264,32 +244,99 @@ RIGHT SIDEBAR TOGGLE SECTION
 
  
 </div>
-	<!-- contact page -->
-	<section class="w3l-contact py-5" id="contact">
+	<!-- help -->
+	<div class="faqs-w3l py-5">
 		<div class="container py-md-5 py-4">
-			<div class="mx-auto pt-lg-4 pt-md-5 pt-4" style="max-width:1000px">
-				<div class="row contact-block">
-                <div class="col-md-5 contact-left"> 
-                <form action="#" method="post" id="myform">
-					<div class="form-group">
-							<input type="password" class="form-control" placeholder="Old Password" name="opass" required="">
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="New Password" name="npass" required="">
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="Confirm Password" name="cpass" required="">
-						</div>
-						<div class="right-w3l">
-							<input type="submit"  class="form-control" value="Change ">
-						</div>
-                    </div>
-				</form>
+			<!-- help content -->
+			<div class="wthree-help mb-sm-5 mb-4">
+				<div class="agile-left-help">
+					<h3 class="w3-head mb-4">How can we help you?</h3>
+					<form action="#" id="myform" method="get">
+						<textarea placeholder="Type keywords to find answers" name="Message" required=""></textarea> <br>
+						<button class="btn btn-style mt-4">Submit Now</button>
+					</form>
+					<h5 class="my-sm-4 my-3">OR</h5>
+					<a class="btn btn-style btn-style-secondary" href="contact.php">Contact Us</a>
 				</div>
 			</div>
+			<!-- //help content -->
+			<!-- Faqs -->
+			<h3 class="w3-head mb-2">Top 5 Frequently asked questions</h3>
+			<div class="faqs-w3l py-5">
+		<div class="container py-md-5 py-4">
+			<h3 class="w3-head mb-2">Top 5 Faq's</h3>
+			<div class="faq-w3agile">
+				<ul class="faq pl-4">
+					<li class="item1 mt-4 pl-2">
+						<a href="#" title="click here">How secure is the payment process on your e-commerce platform?</a>
+						<ul>
+							<li class="subitem1">
+								<p> Users often want assurance that their financial information is secure when making online purchases.
+									 Provide information on the security measures in place, such as encryption protocols and secure payment
+									  gateways.
+								</p>
+							</li>
+						</ul>
+					</li>
+					<li class="item1 mt-4 pl-2">
+						<a href="#" title="click here">What is your return policy?</a>
+						<ul>
+							<li class="subitem1">
+								<p>
+								Clear and transparent return policies build trust with customers. FAQs should address questions about the return
+								 process, including timeframes, conditions for returns, and any associated costs.
+								</p>
+							</li>
+						</ul>
+					</li>
+					<li class="item1 mt-4 pl-2">
+						<a href="#" title="click here">What payment methods do you accept?</a>
+						<ul>
+							<li class="subitem1">
+								<p>
+								Provide a list of accepted payment methods to ensure customers can use their preferred options. Include
+								 information about credit/debit cards, digital wallets, and any other payment options available on your 
+								 platform.
+								</p>
+							</li>
+						</ul>
+					</li>
+					<li class="item1 mt-4 pl-2">
+						<a href="#" title="click here">Are there any discounts, promotions, or loyalty programs available?</a>
+						<ul>
+							<li class="subitem1">
+								<p>
+								Highlight ongoing promotions, discount codes, or loyalty programs to encourage customer
+								 engagement and repeat business.
+									
+								</p>
+							</li>
+						</ul>
+					</li>
+					<li class="item1 mt-4 pl-2">
+						<a href="#" title="click here">Are there any product care instructions or FAQs specific to the items I purchased? </a>
+						<ul>
+							<li class="subitem1">
+								<p>
+								Include information about product care, maintenance, or any specific FAQs related to the products you sell. 
+								This ensures customers have the information they need to use and maintain their purchases.
+								</p>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
 		</div>
-	</section>
-	<!-- //contact page -->
+	</div>
+			<!-- //Faqs -->
+		</div>
+	</div>
+	<!-- //help -->
+
+	<!-- middle section -->
+	
+	
+	<!-- middle section -->
 <div style="margin: 8px auto; display: block; text-align:center;">
 
 <!---728x90--->
@@ -300,7 +347,7 @@ RIGHT SIDEBAR TOGGLE SECTION
 		include('./thempart/footer.php')
 	?>
 	<!-- //footer -->
-		<!-- js-files -->
+	<!-- js-files -->
 	<!-- common jquery plugin -->
 	<script data-cfasync="false" src="../../../../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/jquery-3.3.1.min.js"></script>
 	<!-- //common jquery plugin -->
@@ -309,12 +356,12 @@ RIGHT SIDEBAR TOGGLE SECTION
 	<script type="text/javascript">
 		$(document).ready(function () {
 			/*
-			    var defaults = {
-			    containerID: 'toTop', // fading element id
-			    containerHoverID: 'toTopHover', // fading element hover id
-			    scrollSpeed: 1200,
-			    easingType: 'linear' 
-			    };
+				var defaults = {
+				containerID: 'toTop', // fading element id
+				containerHoverID: 'toTopHover', // fading element hover id
+				scrollSpeed: 1200,
+				easingType: 'linear' 
+				};
 			*/
 
 			$().UItoTop({
@@ -477,7 +524,7 @@ RIGHT SIDEBAR TOGGLE SECTION
 	<!-- //bootstrap-->
 	<!-- //Js scripts -->
 
-<script>(function(){var js = "window['__CF$cv$params']={r:'8443ba6cd8aa0336',t:'MTcwNTA0NDk4NC40NzEwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../../../../cdn-cgi/challenge-platform/h/b/scripts/jsd/c8377512/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+<script>(function(){var js = "window['__CF$cv$params']={r:'8443ba88edc00337',t:'MTcwNTA0NDk4OC44OTIwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../../../../cdn-cgi/challenge-platform/h/b/scripts/jsd/c8377512/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
 
 
 
@@ -492,5 +539,4 @@ $("#myform").validate();
 .error{
 color:red;
 }
-</style>
 </html>

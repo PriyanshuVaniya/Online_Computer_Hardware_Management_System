@@ -1,38 +1,13 @@
 <?php
 session_start();
-include('connection.php');
-if (!isset($_SESSION['id'])) {
-	header("location:login.php");
-	}
-
-if($_POST)
-{
-	$opass = $_POST['opass'];
-	$npass = $_POST['npass'];
-	$cpass = $_POST['cpass'];
-	$id = $_SESSION['id'];
-    $opq = mysqli_query($connection,"select * from tbl_user where user_id = '{$id}'");
-$opdata = mysqli_fetch_array($opq);
-//Check Old Password
-if ($opass == $opdata['password']) {
-//Compare New and Confirm
-if ($npass == $cpass){
-//Update Password
-$uq = mysqli_query($connection, "update tbl_user set password='{$npass}' where user_id='{$id}' ");
-if ($uq) {
-echo "<script>alert('Password Changed'); </script>";
-header('location:index.php');
-}
-} else {
-echo "<script>alert('New and Confirm Password Not Match'); </script>";
-}
-} else {
-echo "<script>alert('Old Password Not Match'); </script>";
-}
-}
+include 'connection.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
+
+<!-- Mirrored from p.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 12 Jan 2024 07:37:18 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
 	<title>Computer hub</title>
 	<!-- Required meta tags -->
@@ -237,17 +212,27 @@ RIGHT SIDEBAR TOGGLE SECTION
   }
 }
 </style>
+	<!-- top-header -->
+	<?php
+			include('./thempart/header.php');
+		?>
+	<!-- //top-header -->
 
+	<!-- header-bottom-->
+	
+	<!-- //navigation -->
 
-    <!-- top-header -->
-    <?php
-		include('./thempart/header.php');
-	?>
-    <!-- //top-header -->
 	<!-- banner-2 -->
-	<div class="page-head_agile_info_w3l inner-contact-page">
+	<div class="page-head_agile_info_w3l inner-about-page">
 		<div class="container py-5">
-			<h3 class="title-style text-white pt-5"><span>Change Password</span></h3>
+			<h3 class="title-style text-white pt-5">Few Words about <span>Us</span></h3>
+			<ul class="w3_short pt-3 pb-5">
+				<li>
+					<a href="index.php" class="text-white">Home</a>
+					<i class="fa fa-angle-right mx-2 text-white" aria-hidden="true"></i>
+				</li>
+				<li class="text-light">About Us</li>
+			</ul>
 		</div>
 	</div>
 	<!-- //banner-2 -->
@@ -264,32 +249,109 @@ RIGHT SIDEBAR TOGGLE SECTION
 
  
 </div>
-	<!-- contact page -->
-	<section class="w3l-contact py-5" id="contact">
+	<!-- about section -->
+	<section class="w3l-about-2 py-5">
 		<div class="container py-md-5 py-4">
-			<div class="mx-auto pt-lg-4 pt-md-5 pt-4" style="max-width:1000px">
-				<div class="row contact-block">
-                <div class="col-md-5 contact-left"> 
-                <form action="#" method="post" id="myform">
-					<div class="form-group">
-							<input type="password" class="form-control" placeholder="Old Password" name="opass" required="">
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="New Password" name="npass" required="">
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="Confirm Password" name="cpass" required="">
-						</div>
-						<div class="right-w3l">
-							<input type="submit"  class="form-control" value="Change ">
-						</div>
-                    </div>
-				</form>
+			<div class="row align-items-center justify-content-between">
+				<div class="col-lg-6 about-2-secs-left pr-lg-5">
+					<h3 class="title-style-2 mb-sm-3 mb-2"><span class="font-weight-bold">We Work</span> for your best
+						Success
+					</h3>
+					<p>Enhanced monitoring procedures. It's important
+a tortor is made. In and to decorate with propaganda, mass in time, mourning
+wisdom</p>
+					<ul class="list-about-2 list-unstyled mt-sm-4 mt-3">
+						<li class="py-1"><i class="fas fa-check-square mr-2"></i>For at least
+I will come</li>
+						<li class="py-2"><i class="fas fa-check-square mr-2"></i>Who are we?
+exercise in any work</li>
+						<li class="py-1"><i class="fas fa-check-square mr-2"></i>Unless some of the
+it is a good idea</li>
+					</ul>
+					<div class="mt-4">
+						<a class="btn btn-style" href="product.php">View Our Products</a>
+					</div>
+				</div>
+				<div class="col-lg-6 about-2-secs-right mt-lg-0 mt-5">
+					<img src="images/about2.png" alt="" class="img-fluid img-responsive" />
 				</div>
 			</div>
 		</div>
 	</section>
-	<!-- //contact page -->
+	<!-- //about section -->
+
+	<!-- clients section -->
+	<div class="w3l-cutomer py-5">
+		<div class="container py-md-5 py-4">
+			<div style="max-width:700px" class="mb-5">
+				<h3 class="title-style-2 text-white mb-2">Our <span class="font-weight-bold">Customer </span>
+					Says
+				</h3>
+				<p class="text-light">But that you may see whence all this error is born of the pleasure of the accusers
+and pain, and she herself
+which by that inventor</p>
+			</div>
+			<div class="row content-sec">
+				<div class="col-lg-4 col-md-6 testi-sections">
+					<div class="testimonials_grid">
+						<p class="sub-test"><q>
+						For in free time, when freed
+we have the option of choosing and nothing prevents us.</q>
+						</p>
+						<div class="d-grid sub-author-con">
+							<div class="testi-img-res">
+								<img src="images/testi2.jpg" alt="" class="img-fluid" />
+							</div>
+							<div class="testi_grid text-left">
+								<h5>Petey Cruis</h5>
+								<p>Caption Here</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 mt-md-0 mt-4 testi-sections">
+					<div class="testimonials_grid">
+						<p class="sub-test"><q>
+						For
+free
+at the time when it was released
+we have the option of choosing and nothing prevents us.</q>
+						</p>
+						<div class="d-grid sub-author-con">
+							<div class="testi-img-res">
+								<img src="images/testi1.jpg" alt="" class="img-fluid" />
+							</div>
+							<div class="testi_grid text-left">
+								<h5>Molive Joe</h5>
+								<p>Caption Here</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 mt-lg-0 mt-4 testi-sections">
+					<div class="testimonials_grid">
+						<p class="sub-test"><q>
+						For
+free
+at the time when it was released
+we have the option of choosing and nothing prevents us.</q>
+						</p>
+						<div class="d-grid sub-author-con">
+							<div class="testi-img-res">
+								<img src="images/testi3.jpg" alt="" class="img-fluid" />
+							</div>
+							<div class="testi_grid text-left">
+								<h5>Paige Turner</h5>
+								<p>Caption Here</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- //clients section -->
 <div style="margin: 8px auto; display: block; text-align:center;">
 
 <!---728x90--->
@@ -300,7 +362,7 @@ RIGHT SIDEBAR TOGGLE SECTION
 		include('./thempart/footer.php')
 	?>
 	<!-- //footer -->
-		<!-- js-files -->
+	<!-- js-files -->
 	<!-- common jquery plugin -->
 	<script data-cfasync="false" src="../../../../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/jquery-3.3.1.min.js"></script>
 	<!-- //common jquery plugin -->
@@ -477,20 +539,8 @@ RIGHT SIDEBAR TOGGLE SECTION
 	<!-- //bootstrap-->
 	<!-- //Js scripts -->
 
-<script>(function(){var js = "window['__CF$cv$params']={r:'8443ba6cd8aa0336',t:'MTcwNTA0NDk4NC40NzEwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../../../../cdn-cgi/challenge-platform/h/b/scripts/jsd/c8377512/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+<script>(function(){var js = "window['__CF$cv$params']={r:'8443ba51ea190337',t:'MTcwNTA0NDk4MC4wOTcwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../../../../cdn-cgi/challenge-platform/h/b/scripts/jsd/c8377512/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
 
 
-
-<script src="jquery/jquery-3.7.1.js"></script>
-<script src="jquery/jquery.validate.js"></script>
-<script>
-$(document).ready(function(){
-$("#myform").validate();
-});
-</script>
-<style>
-.error{
-color:red;
-}
-</style>
+<!-- Mirrored from p.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/about.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 12 Jan 2024 07:37:20 GMT -->
 </html>

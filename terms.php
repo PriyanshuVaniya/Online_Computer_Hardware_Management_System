@@ -1,40 +1,15 @@
 <?php
 session_start();
-include('connection.php');
-if (!isset($_SESSION['id'])) {
-	header("location:login.php");
-	}
-
-if($_POST)
-{
-	$opass = $_POST['opass'];
-	$npass = $_POST['npass'];
-	$cpass = $_POST['cpass'];
-	$id = $_SESSION['id'];
-    $opq = mysqli_query($connection,"select * from tbl_user where user_id = '{$id}'");
-$opdata = mysqli_fetch_array($opq);
-//Check Old Password
-if ($opass == $opdata['password']) {
-//Compare New and Confirm
-if ($npass == $cpass){
-//Update Password
-$uq = mysqli_query($connection, "update tbl_user set password='{$npass}' where user_id='{$id}' ");
-if ($uq) {
-echo "<script>alert('Password Changed'); </script>";
-header('location:index.php');
-}
-} else {
-echo "<script>alert('New and Confirm Password Not Match'); </script>";
-}
-} else {
-echo "<script>alert('Old Password Not Match'); </script>";
-}
-}
+include 'connection.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
+
+<!-- Mirrored from p.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/terms.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 12 Jan 2024 07:37:43 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
-	<title>Computer hub</title>
+<title>Computer hub</title>
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -238,16 +213,22 @@ RIGHT SIDEBAR TOGGLE SECTION
 }
 </style>
 
-
-    <!-- top-header -->
-    <?php
-		include('./thempart/header.php');
-	?>
-    <!-- //top-header -->
+	<!-- top-header -->
+	<?php
+			include('./thempart/header.php');
+		?>
+	<!-- //top-header -->
 	<!-- banner-2 -->
 	<div class="page-head_agile_info_w3l inner-contact-page">
 		<div class="container py-5">
-			<h3 class="title-style text-white pt-5"><span>Change Password</span></h3>
+			<h3 class="title-style text-white pt-5"><span>Terms</span> of use</h3>
+			<ul class="w3_short pt-3 pb-5">
+				<li>
+					<a href="index.php" class="text-white">Home</a>
+					<i class="fa fa-angle-right mx-2 text-white" aria-hidden="true"></i>
+				</li>
+				<li class="text-light">Terms</li>
+			</ul>
 		</div>
 	</div>
 	<!-- //banner-2 -->
@@ -264,32 +245,60 @@ RIGHT SIDEBAR TOGGLE SECTION
 
  
 </div>
-	<!-- contact page -->
-	<section class="w3l-contact py-5" id="contact">
+	<!-- terms -->
+	<div class="terms py-4">
 		<div class="container py-md-5 py-4">
-			<div class="mx-auto pt-lg-4 pt-md-5 pt-4" style="max-width:1000px">
-				<div class="row contact-block">
-                <div class="col-md-5 contact-left"> 
-                <form action="#" method="post" id="myform">
-					<div class="form-group">
-							<input type="password" class="form-control" placeholder="Old Password" name="opass" required="">
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="New Password" name="npass" required="">
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control" placeholder="Confirm Password" name="cpass" required="">
-						</div>
-						<div class="right-w3l">
-							<input type="submit"  class="form-control" value="Change ">
-						</div>
-                    </div>
-				</form>
-				</div>
-			</div>
+			<h3 class="w3-head w3-secong-head text-capitalize">please read these terms and conditions carefully.</h3>
+			<h6 class="my-md-4 my-3">Personal Information</h6>
+			<p class="font-weight-light pl-sm-4 mb-2">We respect your privacy. Please refer to 
+				our Privacy Policy for details on how we collect, use, and protect your personal 
+				information.</p>
+
+			<h6 class="my-md-4 my-3">License & Site access</h6>
+			<p class="font-weight-light pl-sm-4 mb-2">Subject to compliance with these terms, 
+				we grant you a limited, non-exclusive, non-transferable license to access and 
+				use our site for personal and non-commercial purposes.</p>
+			
+			<h6 class="my-md-4 my-3">Eligibility  </h6>
+			<p class="font-weight-light pl-sm-4 mb-2">By using our site, you confirm that
+				 you are eligible to enter into a legally binding contract and meet the age
+				  requirements as per applicable laws.
+</p>
+		
+			<h6 class="my-md-4 my-3">Account & Registration</h6>
+			<p class="font-weight-light pl-sm-4 mb-2">To access certain features, you may 
+				need to create an account. You are responsible for maintaining the
+				 confidentiality of your account information.</p>
+			
+
+			<h6 class="my-md-4 my-3">Cancellation by Site / Customer</h6>
+			<p class="font-weight-light pl-sm-4 mb-2"> The site reserves the right to cancel
+				 orders or refuse service at its discretion.</p>
+			
+
+			<h6 class="my-md-4 my-3">You Agree and Confirm</h6>
+			<p class="font-weight-light pl-sm-4 mb-2">By using our site, you agree to comply with these terms 
+				and any additional terms that may apply to specific features.
+You confirm that all information provided during registration or transaction is accurate and complete.
+			</p>
+			<h6 class="my-md-4 my-3">Copyright & Trademark</h6>
+			<p class="font-weight-light pl-sm-4 mb-2"> All content on the site, including text, graphics, logos, images, 
+				and software, is the property of Computer Hub and is protected by copyright laws.
+Trademarks used on the site are the property of their respective owners.
+Note: These terms and conditions are subject to change, and any modifications will be effective upon posting on the site. It is your responsibility to review these terms periodically.
+</p>
+            <h6 class="my-md-4 my-3">Contact Information</h6>
+<a href="contact.php"> 
+			<p class="font-weight-light pl-sm-4 mb-2"> For any queries or concerns regarding these terms, please contact us at Computer Hub</p></a>
 		</div>
-	</section>
-	<!-- //contact page -->
+	</div>
+	<!-- //terms -->
+
+	<!-- middle section -->
+	
+	
+	
+	<!-- middle section -->
 <div style="margin: 8px auto; display: block; text-align:center;">
 
 <!---728x90--->
@@ -300,7 +309,7 @@ RIGHT SIDEBAR TOGGLE SECTION
 		include('./thempart/footer.php')
 	?>
 	<!-- //footer -->
-		<!-- js-files -->
+	<!-- js-files -->
 	<!-- common jquery plugin -->
 	<script data-cfasync="false" src="../../../../../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="js/jquery-3.3.1.min.js"></script>
 	<!-- //common jquery plugin -->
@@ -477,20 +486,8 @@ RIGHT SIDEBAR TOGGLE SECTION
 	<!-- //bootstrap-->
 	<!-- //Js scripts -->
 
-<script>(function(){var js = "window['__CF$cv$params']={r:'8443ba6cd8aa0336',t:'MTcwNTA0NDk4NC40NzEwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../../../../cdn-cgi/challenge-platform/h/b/scripts/jsd/c8377512/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
+<script>(function(){var js = "window['__CF$cv$params']={r:'8443ba6908710337',t:'MTcwNTA0NDk4My44MDYwMDA='};_cpo=document.createElement('script');_cpo.nonce='',_cpo.src='../../../../../../cdn-cgi/challenge-platform/h/b/scripts/jsd/c8377512/main.js',document.getElementsByTagName('head')[0].appendChild(_cpo);";var _0xh = document.createElement('iframe');_0xh.height = 1;_0xh.width = 1;_0xh.style.position = 'absolute';_0xh.style.top = 0;_0xh.style.left = 0;_0xh.style.border = 'none';_0xh.style.visibility = 'hidden';document.body.appendChild(_0xh);function handler() {var _0xi = _0xh.contentDocument || _0xh.contentWindow.document;if (_0xi) {var _0xj = _0xi.createElement('script');_0xj.innerHTML = js;_0xi.getElementsByTagName('head')[0].appendChild(_0xj);}}if (document.readyState !== 'loading') {handler();} else if (window.addEventListener) {document.addEventListener('DOMContentLoaded', handler);} else {var prev = document.onreadystatechange || function () {};document.onreadystatechange = function (e) {prev(e);if (document.readyState !== 'loading') {document.onreadystatechange = prev;handler();}};}})();</script></body>
 
 
-
-<script src="jquery/jquery-3.7.1.js"></script>
-<script src="jquery/jquery.validate.js"></script>
-<script>
-$(document).ready(function(){
-$("#myform").validate();
-});
-</script>
-<style>
-.error{
-color:red;
-}
-</style>
+<!-- Mirrored from p.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/terms.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 12 Jan 2024 07:37:43 GMT -->
 </html>
