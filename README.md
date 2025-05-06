@@ -95,17 +95,15 @@ userpan/
 
 ---
 
-## 📸 Screenshots
 
-*(Add relevant screenshots for the UI: homepage, cart, login, etc.)*
 
 ---
 
 ## 🧑‍💻 Author
 
-- **Your Name**
-- [Your GitHub Profile](https://github.com/yourusername)
-- Contact: your.email@example.com
+-  **Priyanshu Vaniya**
+- [GitHub Profile](https://github.com/PriyanshuVaniya)
+- Contact: priyanshuvaniya2703@gmail.com
 
 ---
 
