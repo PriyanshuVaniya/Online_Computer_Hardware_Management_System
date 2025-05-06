@@ -100,17 +100,15 @@ adminpan/
 
 ---
 
-## 📸 Screenshots
 
-*(Add screenshots of your login page, dashboard, etc. if available.)*
 
 ---
 
 ## 🧑‍💻 Author
 
-- **Your Name**
-- [Your GitHub Profile](https://github.com/yourusername)
-- Contact: your.email@example.com
+- **Priyanshu Vaniya**
+- [GitHub Profile](https://github.com/PriyanshuVaniya)
+- Contact: priyanshuvaniya2703@gmail.com
 
 ---
 
